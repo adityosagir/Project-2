@@ -10,14 +10,14 @@
     tools:context="com.example.asagir.neighborhoodguide.MainActivity">
 
     <ListView
+        android:id="@+id/restaurant_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/restaurant_listView"></ListView>
+        android:layout_height="wrap_content"></ListView>
 
     <TextView
+        android:id="@+id/restaurant_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/restaurant_textView"
-        android:layout_below="@+id/restaurant_listView"/>
+        android:layout_below="@+id/restaurant_listView" />
 
 </RelativeLayout>

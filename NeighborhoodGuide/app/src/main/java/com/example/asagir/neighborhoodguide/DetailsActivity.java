@@ -3,6 +3,7 @@ package com.example.asagir.neighborhoodguide;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asagir.neighborhoodguide.R;
 import com.example.asagir.neighborhoodguide.RestaurantSQLiteOpenHelper;
@@ -19,7 +20,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         int id = getIntent().getIntExtra("_id", -1);
 
-        if (id<=0){
+        if (id >= 0) {
             TextView restaurantName = (TextView) findViewById(R.id.name);
             TextView restaurantCuisine = (TextView) findViewById(R.id.cuisine);
             TextView restaurantAddress = (TextView) findViewById(R.id.address);
