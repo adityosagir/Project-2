@@ -21,8 +21,8 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = RestaurantSQLiteOpenHelper.class.getCanonicalName();
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "RestaurantList";
-    private static final String RESTAURANT_LIST_TABLE = "RestaurantDetail";
+    private static final String DATABASE_NAME = "RestaurantList.db";
+    private static final String RESTAURANT_LIST_TABLE = "RestaurantDetails";
 
     public static final String COL_ID = "_id";
     public static final String COL_RESTAURANT_NAME = "Name";
@@ -136,7 +136,7 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         return cursorSearch;
     }
 
-    /*public String getNameById(int id) {
+    public String getNameById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursorName = db.query(RESTAURANT_LIST_TABLE, // a. table
@@ -193,24 +193,24 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public String getFavoriteById(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursorFavorite = db.query(RESTAURANT_LIST_TABLE, // a. table
-                new String[]{COL_FAVORITE}, // b. column names
-                COL_ID + " = ?", // c. selections
-                new String[]{String.valueOf(id)}, // d. selections args
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
-
-        if (cursorFavorite.moveToFirst()) {
-            return cursorFavorite.getString(cursorFavorite.getColumnIndex(COL_FAVORITE));
-        } else {
-            return "Favorite not found";
-        }
-    }
+//    public String getFavoriteById(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursorFavorite = db.query(RESTAURANT_LIST_TABLE, // a. table
+//                new String[]{COL_FAVORITE}, // b. column names
+//                COL_ID + " = ?", // c. selections
+//                new String[]{String.valueOf(id)}, // d. selections args
+//                null, // e. group by
+//                null, // f. having
+//                null, // g. order by
+//                null); // h. limit
+//
+//        if (cursorFavorite.moveToFirst()) {
+//            return cursorFavorite.getString(cursorFavorite.getColumnIndex(COL_FAVORITE));
+//        } else {
+//            return "Favorite not found";
+//        }
+//    }
 
     public String getDescriptionById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -229,7 +229,7 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         } else {
             return "Description not found";
         }
-    }*/
+    }
 
 }
 

@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
@@ -25,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DBAssetHelper dbSetup = new DBAssetHelper(MainActivity.this);
+        dbSetup.getReadableDatabase();
+
         mRestaurantListView = (ListView) findViewById(R.id.restaurant_listView);
 
-        Cursor cursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).getRestaurantList();
+        final Cursor cursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).getRestaurantList();
 
         mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
         mRestaurantListView.setAdapter(mCursorAdapter);
@@ -35,13 +40,25 @@ public class MainActivity extends AppCompatActivity {
         mHelper = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this);
 
         handleIntent(getIntent());
+
+        mRestaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+
+                cursor.moveToPosition(position);
+                intent.putExtra("_id", cursor.getInt(cursor.getColumnIndex(RestaurantSQLiteOpenHelper.COL_ID)));
+                startActivity(intent);
+            }
+
+        });
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
+        @Override
+        protected void onNewIntent (Intent intent){
+            super.onNewIntent(intent);
+            handleIntent(intent);
+        }
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -52,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).searchRestaurantList(query);
             //Cursor helpCursor = mHelper.getRestaurantList();
-            Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).getRestaurantList();
+            Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).searchRestaurantList(query);
             mCursorAdapter.changeCursor(newCursor);
 
             mCursorAdapter.notifyDataSetChanged();
@@ -75,11 +92,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-
-
                 //Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).searchRestaurantList(query);
-                Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).getRestaurantList();
+                Cursor newCursor = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this).searchRestaurantList(query);
                 Toast.makeText(MainActivity.this, "Search result size: " + newCursor.getCount(), Toast.LENGTH_SHORT).show();
                 mCursorAdapter.swapCursor(newCursor);
 
@@ -94,4 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
+
 }
