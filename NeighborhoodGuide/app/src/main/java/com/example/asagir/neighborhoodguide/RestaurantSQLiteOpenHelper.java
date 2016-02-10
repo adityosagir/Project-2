@@ -11,11 +11,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by asagir on 2/6/16.
  */
 public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
-    private static final String TAG = RestaurantSQLiteOpenHelper.class.getCanonicalName();
+    //private static final String TAG = RestaurantSQLiteOpenHelper.class.getCanonicalName();
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "RestaurantList.db";
-    private static final String RESTAURANT_LIST_TABLE = "RestaurantDetails";
+    public static final String DATABASE_NAME = "RestaurantList.db";
+    public static final String RESTAURANT_LIST_TABLE = "RestaurantDetails";
 
     public static final String COL_ID = "_id";
     public static final String COL_RESTAURANT_NAME = "Name";
@@ -48,7 +48,7 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-    private RestaurantSQLiteOpenHelper(Context context) {
+    public RestaurantSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mHelperContext = context;
     }
@@ -186,7 +186,7 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getFavorite() {
+    public Cursor getFavorites() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursorFavorite = db.query(RESTAURANT_LIST_TABLE, // a. table
@@ -205,8 +205,8 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursorFavoriteCheck = db.query(RESTAURANT_LIST_TABLE, // a. table
-                RESTAURANT_COLUMNS, // b. column names
-                COL_ID + " = ?", // c. selections
+                new String[] {COL_FAVORITE}, // b. column names
+                COL_ID + " LIKE ? AND " + COL_FAVORITE + " = 1", // c. selections
                 new String[]{String.valueOf(id)}, // d. selections args
                 null, // e. group by
                 null, // f. having
@@ -220,22 +220,22 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public int setFavorite(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        if (checkFavorite(id) == 0) {
-            contentValues.put(COL_ID, id);
-            contentValues.put(COL_FAVORITE, 1);
-        } else if (checkFavorite(id) == 1) {
-            contentValues.put(COL_ID, id);
-            contentValues.put(COL_FAVORITE, 0);
-        }
-        db.update(RESTAURANT_LIST_TABLE, contentValues, "_id = ?", new String[]{String.valueOf(id)});
-
-        return checkFavorite(id);
-
-    }
+//    public int setFavorite(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//
+//        if (checkFavorite(id) == 0) {
+//            contentValues.put(COL_ID, id);
+//            contentValues.put(COL_FAVORITE, 1);
+//        } else if (checkFavorite(id) == 1) {
+//            contentValues.put(COL_ID, id);
+//            contentValues.put(COL_FAVORITE, 0);
+//        }
+//        db.update(RESTAURANT_LIST_TABLE, contentValues, "_id = ?", new String[]{String.valueOf(id)});
+//
+//        return checkFavorite(id);
+//
+//    }
 
     public String getDescriptionById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
