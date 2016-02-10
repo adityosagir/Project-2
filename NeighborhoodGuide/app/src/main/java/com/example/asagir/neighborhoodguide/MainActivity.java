@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mHelper = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this);
 
         final Cursor cursor = mHelper.getRestaurantList();
+        final Button button = (Button) findViewById(R.id.button);
 
         mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
         mRestaurantListView.setAdapter(mCursorAdapter);
@@ -53,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+        });
+
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
+                startActivity(i);
+                finish();
+            }
         });
 
     }

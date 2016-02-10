@@ -9,12 +9,22 @@
     android:paddingTop="16dp"
     tools:context="com.example.asagir.neighborhoodguide.DetailsActivity">
 
+   <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/buttonMakeFavorite"
+       android:text="Add To Favorites"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentRight="true"
+       android:layout_alignParentEnd="true" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/buttonMakeFavorite"/>
 
     <TextView
         android:id="@+id/cuisine"

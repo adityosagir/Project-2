@@ -20,4 +20,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/restaurant_listView" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:id="@+id/button"
+        android:layout_alignTop="@+id/restaurant_listView"
+        android:layout_alignRight="@+id/restaurant_listView"
+        android:layout_alignEnd="@+id/restaurant_listView" />
+
 </RelativeLayout>

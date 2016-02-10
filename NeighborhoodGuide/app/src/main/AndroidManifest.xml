@@ -25,6 +25,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".DetailsActivity" />
+        <activity android:name=".FavoritesActivity"></activity>
     </application>
 
 </manifest>

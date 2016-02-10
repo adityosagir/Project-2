@@ -1,5 +1,6 @@
 package com.example.asagir.neighborhoodguide;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -185,24 +186,56 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-//    public String getFavoriteById(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursorFavorite = db.query(RESTAURANT_LIST_TABLE, // a. table
-//                new String[]{COL_FAVORITE}, // b. column names
-//                COL_ID + " = ?", // c. selections
-//                new String[]{String.valueOf(id)}, // d. selections args
-//                null, // e. group by
-//                null, // f. having
-//                null, // g. order by
-//                null); // h. limit
-//
-//        if (cursorFavorite.moveToFirst()) {
-//            return cursorFavorite.getString(cursorFavorite.getColumnIndex(COL_FAVORITE));
-//        } else {
-//            return "Favorite not found";
-//        }
-//    }
+    public Cursor getFavorite() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursorFavorite = db.query(RESTAURANT_LIST_TABLE, // a. table
+                RESTAURANT_COLUMNS, // b. column names
+                COL_FAVORITE + " = 1", // c. selections
+                null, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        return cursorFavorite;
+    }
+
+    public int checkFavorite(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursorFavoriteCheck = db.query(RESTAURANT_LIST_TABLE, // a. table
+                RESTAURANT_COLUMNS, // b. column names
+                COL_ID + " = ?", // c. selections
+                new String[]{String.valueOf(id)}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        if (cursorFavoriteCheck.moveToFirst()) {
+            return cursorFavoriteCheck.getInt(cursorFavoriteCheck.getColumnIndex(COL_FAVORITE));
+        }
+        return -1;
+    }
+
+
+    public int setFavorite(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        if (checkFavorite(id) == 0) {
+            contentValues.put(COL_ID, id);
+            contentValues.put(COL_FAVORITE, 1);
+        } else if (checkFavorite(id) == 1) {
+            contentValues.put(COL_ID, id);
+            contentValues.put(COL_FAVORITE, 0);
+        }
+        db.update(RESTAURANT_LIST_TABLE, contentValues, "_id = ?", new String[]{String.valueOf(id)});
+
+        return checkFavorite(id);
+
+    }
 
     public String getDescriptionById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -223,8 +256,5 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+
 }
-
-
-
-
