@@ -48,5 +48,14 @@
         android:layout_below="@+id/address"
         android:textSize="15sp" />
 
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_above="@+id/buttonMakeFavorite"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:src="@drawable/crescent"/>-->
+
 
 </RelativeLayout>

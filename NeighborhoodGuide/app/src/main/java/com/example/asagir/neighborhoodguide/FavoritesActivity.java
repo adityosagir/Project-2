@@ -22,12 +22,8 @@ public class FavoritesActivity extends AppCompatActivity {
 
         RestaurantSQLiteOpenHelper helper = RestaurantSQLiteOpenHelper.getmInstance(FavoritesActivity.this);
 
-        final Cursor cursor = helper.getFavorites();
+
         final int id = getIntent().getIntExtra("_id", -1);
-
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
-        favoritesListView.setAdapter(mCursorAdapter);
-
         favoritesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -38,9 +34,38 @@ public class FavoritesActivity extends AppCompatActivity {
                 int idLocation = cursor.getInt(cursor.getColumnIndex(RestaurantSQLiteOpenHelper.COL_ID));
                 intent.putExtra("_id", idLocation);
                 startActivity(intent);
+
             }
 
         });
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Cursor cursor = RestaurantSQLiteOpenHelper.getmInstance(FavoritesActivity.this).getFavorites();
+
+        if (mCursorAdapter == null) {
+
+            mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
+            ListView favoritesListView = (ListView) findViewById(R.id.favoritesListView);
+            favoritesListView.setAdapter(mCursorAdapter);
+        } else {
+            mCursorAdapter.changeCursor(cursor);
+        }
+
+
+        mCursorAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
+        finish();
+
+    }
+
 
 }

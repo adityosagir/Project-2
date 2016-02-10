@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -61,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
                 startActivity(i);
-                finish();
+                //finish();
             }
         });
+
 
     }
 
@@ -118,5 +120,24 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+    private void actionBarSetup(String title){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(title);
+    }
+
+//    private int getDrawableValue(String icon){
+//        switch(icon){
+//            case "search":
+//                return android.R.drawable.ic_menu_search;
+//            case "add":
+//                return android.R.drawable.ic_menu_add;
+//            case "upload":
+//                return android.R.drawable.ic_menu_upload;
+//            case "play":
+//                return android.R.drawable.ic_media_play;
+//            default:
+//                return 0;
+//        }
 
 }

@@ -12,11 +12,15 @@
     <ListView
         android:id="@+id/favoritesListView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/favoritesTextView"></ListView>
 
     <TextView
         android:id="@+id/favoritesTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
 
 </RelativeLayout>
