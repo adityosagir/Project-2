@@ -4,14 +4,14 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
@@ -28,15 +28,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize the database
         DBAssetHelper dbSetup = new DBAssetHelper(MainActivity.this);
         dbSetup.getReadableDatabase();
 
+        // Create a listView to display results from the database
         mRestaurantListView = (ListView) findViewById(R.id.restaurant_listView);
 
         mHelper = RestaurantSQLiteOpenHelper.getmInstance(MainActivity.this);
 
+        // Create a cursor that can get information from the database
         final Cursor cursor = mHelper.getRestaurantList();
-        final Button button = (Button) findViewById(R.id.button);
 
         mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
         mRestaurantListView.setAdapter(mCursorAdapter);
@@ -58,14 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
-                startActivity(i);
-                //finish();
-            }
-        });
-
+        // Set the button to take you to the FavoritesActivity when clicked
+//        button.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
     }
 
@@ -121,23 +122,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void actionBarSetup(String title){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(title);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       int id = item.getItemId();
+        if (id == R.id.buttonFavoriteList){
+            Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(i);
+        }
+        return true;
     }
-
-//    private int getDrawableValue(String icon){
-//        switch(icon){
-//            case "search":
-//                return android.R.drawable.ic_menu_search;
-//            case "add":
-//                return android.R.drawable.ic_menu_add;
-//            case "upload":
-//                return android.R.drawable.ic_menu_upload;
-//            case "play":
-//                return android.R.drawable.ic_media_play;
-//            default:
-//                return 0;
-//        }
 
 }

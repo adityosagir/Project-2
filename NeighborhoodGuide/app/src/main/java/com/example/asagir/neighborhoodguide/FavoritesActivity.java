@@ -62,7 +62,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
+        //startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
         finish();
 
     }

@@ -1,10 +1,12 @@
 package com.example.asagir.neighborhoodguide;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,7 +41,10 @@ public class DetailsActivity extends AppCompatActivity {
             TextView restaurantCuisine = (TextView) findViewById(R.id.cuisine);
             TextView restaurantAddress = (TextView) findViewById(R.id.address);
             TextView restaurantDescription = (TextView) findViewById(R.id.description);
-//            ImageView restaurantImage = (ImageView) findViewById(R.id.imageView);
+            ImageView restaurantTopImage = (ImageView) findViewById(R.id.detailsViewTopImage);
+            ImageView restaurantLeftImage = (ImageView) findViewById(R.id.detailsViewLeftImage);
+            ImageView restaurantRightImage = (ImageView) findViewById(R.id.detailsViewRightImage);
+
 
             String name = RestaurantSQLiteOpenHelper.getmInstance(DetailsActivity.this).getNameById(id);
             String cuisine = RestaurantSQLiteOpenHelper.getmInstance(DetailsActivity.this).getCuisineById(id);
@@ -51,18 +56,34 @@ public class DetailsActivity extends AppCompatActivity {
             restaurantCuisine.setText(cuisine);
             restaurantAddress.setText(address);
             restaurantDescription.setText(description);
-//            restaurantImage.setImageDrawable(image);
+
+            switch (id) {
+                case 1:
+                    restaurantTopImage.setImageResource(R.drawable.crescentfood2);
+                    restaurantLeftImage.setImageResource(R.drawable.crescentoutdoors);
+                    restaurantRightImage.setImageResource(R.drawable.crescentfood);
+                case 2:
+                    restaurantTopImage.setImageResource(R.drawable.muramenfood2);
+                    restaurantLeftImage.setImageResource(R.drawable.murameninside);
+                    restaurantRightImage.setImageResource(R.drawable.muramenfood);
+//                case "upload":
+//                    return android.R.drawable.ic_menu_upload;
+//                case "play":
+//                    return android.R.drawable.ic_media_play;
+//                default:
+//                    return 0;
+            }
 
             actionBarSetup(name);
 
-            final Button buttonFav = (Button) findViewById(R.id.buttonMakeFavorite);
+            final FloatingActionButton buttonFav = (FloatingActionButton) findViewById(R.id.buttonMakeFavorite);
 
             if (mHelper.checkFavorite(id) == 1) {
                 mFavFlag = true;
-                buttonFav.setBackgroundColor(Color.GREEN);
+                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
             } else {
                 mFavFlag = false;
-                buttonFav.setBackgroundColor(Color.LTGRAY);
+                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
             }
 
 
@@ -72,16 +93,14 @@ public class DetailsActivity extends AppCompatActivity {
                     if (mFavFlag == true) { // If the button is already a favorite
                         SQLiteDatabase db = mHelper.getWritableDatabase();
                         db.execSQL("UPDATE RestaurantDetails SET Favorite = 0 WHERE _id = " + id);
-                        Toast.makeText(DetailsActivity.this, mHelper.getNameById(id)+ " was removed", Toast.LENGTH_SHORT ).show();
-                        buttonFav.setBackgroundColor(Color.LTGRAY);
-                        //buttonFav.setText("Add Favorite");
+                        Toast.makeText(DetailsActivity.this, mHelper.getNameById(id) + " was removed", Toast.LENGTH_SHORT).show();
+                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
                         mFavFlag = false;
                     } else { // If the button is not already a favorite
                         SQLiteDatabase db = mHelper.getWritableDatabase();
                         db.execSQL("UPDATE RestaurantDetails SET Favorite = 1 WHERE _id = " + id);
-                        Toast.makeText(DetailsActivity.this, mHelper.getNameById(id) + " was added", Toast.LENGTH_SHORT ).show();
-                        buttonFav.setBackgroundColor(Color.GREEN);
-                        //buttonFav.setText("Favorite");
+                        Toast.makeText(DetailsActivity.this, mHelper.getNameById(id) + " was added", Toast.LENGTH_SHORT).show();
+                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
                         mFavFlag = true;
                     }
 
@@ -93,7 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    private void actionBarSetup(String title){
+    private void actionBarSetup(String title) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
     }
