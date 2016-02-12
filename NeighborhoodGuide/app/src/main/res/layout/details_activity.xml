@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="false"
     tools:context="com.example.asagir.neighborhoodguide.DetailsActivity">
 
     <RelativeLayout
@@ -16,8 +17,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/fav"/>
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="109dp"
+            android:src="@drawable/fav" />
 
         <TextView
             android:id="@+id/name"
@@ -25,7 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonMakeFavorite"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Name"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:id="@+id/cuisine"
@@ -33,7 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
             android:textSize="15sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:text="Cuisine"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:id="@+id/address"
@@ -41,40 +51,49 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cuisine"
             android:layout_marginBottom="20dp"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:text="Address"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:text="Description"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
         <ImageView
             android:id="@+id/detailsViewTopImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buttonMakeFavorite"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/crescentfood2" />
+            android:layout_alignParentTop="true"
+            android:src="@drawable/crescentfood2"
+            android:layout_marginBottom="18dp" />
 
         <ImageView
             android:id="@+id/detailsViewLeftImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:src="@drawable/crescentfood"
             android:layout_below="@+id/description"
-            android:layout_centerVertical="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp" />
 
         <ImageView
             android:id="@+id/detailsViewRightImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/crescentoutdoors"
             android:layout_below="@+id/detailsViewLeftImage"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp" />
 
 
     </RelativeLayout>
