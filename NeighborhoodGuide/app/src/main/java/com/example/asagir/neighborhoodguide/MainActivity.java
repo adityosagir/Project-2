@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         handleIntent(intent);
     }
 
+    // Create a cursor and adapter to
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // Do The actual database search
@@ -138,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    // When you click back from the search it should go to the mainactivity screen
     @Override
     public void onBackPressed() {
         Cursor cursor = mHelper.getRestaurantList();

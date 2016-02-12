@@ -48,7 +48,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         if (mCursorAdapter == null) {
 
-            mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
+            mCursorAdapter = new SimpleCursorAdapter(this, R.layout.custom_layout, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
             ListView favoritesListView = (ListView) findViewById(R.id.favoritesListView);
             favoritesListView.setAdapter(mCursorAdapter);
         } else {
