@@ -2,8 +2,10 @@ package com.example.asagir.neighborhoodguide;
 
 import android.app.SearchManager;
 import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,10 +43,20 @@ public class MainActivity extends AppCompatActivity {
         // Create a cursor that can get information from the database
         final Cursor cursor = mHelper.getRestaurantList();
 
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0);
+        mCursorAdapter = new SimpleCursorAdapter(this, R.layout.custom_layout, cursor, new String[]{RestaurantSQLiteOpenHelper.COL_RESTAURANT_NAME}, new int[]{android.R.id.text1}, 0){
+            // Getting the data from the cursor adapter and putting it in the cutom layout view
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                super.bindView(view, context, cursor);
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/geosanslight.ttf");
+
+                textView.setTypeface(typefaceBold);
+            }
+        };
         mRestaurantListView.setAdapter(mCursorAdapter);
 
-
+        // Search and display the results
         handleIntent(getIntent());
 
         mRestaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,17 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 int idLocation = cursor.getInt(cursor.getColumnIndex(RestaurantSQLiteOpenHelper.COL_ID));
                 intent.putExtra("_id", idLocation);
                 startActivity(intent);
+
             }
 
         });
-
-        // Set the button to take you to the FavoritesActivity when clicked
-//        button.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
-//                startActivity(i);
-//            }
-//        });
 
     }
 
@@ -124,12 +130,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       int id = item.getItemId();
-        if (id == R.id.buttonFavoriteList){
+        int id = item.getItemId();
+        if (id == R.id.buttonFavoriteList) {
             Intent i = new Intent(MainActivity.this, FavoritesActivity.class);
             startActivity(i);
         }
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        Cursor cursor = mHelper.getRestaurantList();
+        mCursorAdapter.swapCursor(cursor);
+
+    }
 }

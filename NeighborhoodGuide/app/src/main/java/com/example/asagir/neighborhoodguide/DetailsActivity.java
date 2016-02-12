@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -40,13 +41,12 @@ public class DetailsActivity extends AppCompatActivity {
         final int id = getIntent().getIntExtra("_id", -1);
 
         if (id >= 0) {
+
             TextView restaurantName = (TextView) findViewById(R.id.name);
             TextView restaurantCuisine = (TextView) findViewById(R.id.cuisine);
             TextView restaurantAddress = (TextView) findViewById(R.id.address);
             TextView restaurantDescription = (TextView) findViewById(R.id.description);
             ImageView restaurantTopImage = (ImageView) findViewById(R.id.detailsViewTopImage);
-            ImageView restaurantLeftImage = (ImageView) findViewById(R.id.detailsViewLeftImage);
-            ImageView restaurantRightImage = (ImageView) findViewById(R.id.detailsViewRightImage);
 
 
             String name = RestaurantSQLiteOpenHelper.getmInstance(DetailsActivity.this).getNameById(id);
@@ -54,93 +54,59 @@ public class DetailsActivity extends AppCompatActivity {
             String address = RestaurantSQLiteOpenHelper.getmInstance(DetailsActivity.this).getAddressById(id);
             String description = RestaurantSQLiteOpenHelper.getmInstance(DetailsActivity.this).getDescriptionById(id);
 
+            Typeface typefaceLight = Typeface.createFromAsset(getAssets(), "fonts/geosanslight.ttf");
+            Typeface typefaceBold = Typeface.createFromAsset(getAssets(), "fonts/geosansital.ttf");
 
             restaurantName.setText(name);
+            restaurantName.setTypeface(typefaceLight);
             restaurantCuisine.setText(cuisine);
+            restaurantCuisine.setTypeface(typefaceBold);
             restaurantAddress.setText(address);
+            restaurantAddress.setTypeface(typefaceLight);
             restaurantDescription.setText(description);
+            restaurantDescription.setTypeface(typefaceLight);
+
 
             switch (id) {
                 case 1:
-//                    restaurantTopImage.setImageBitmap(
-//                            decodeSampledBitmapFromResource(getResources(), R.drawable.crescentfood2, 100, 100));
-                    restaurantTopImage.setImageResource(R.drawable.crescentfood);
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.crescentoutdoors, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.crescentfood2, 100, 100));
+                    restaurantTopImage.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.crescentgrill, 250, 250));
                     break;
                 case 2:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.muramenfood2, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.muramenfood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.murameninside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.muramen, 250, 250));
                     break;
                 case 3:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.mwellslogo, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.mwellsfood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.mwellsinside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.mwellsfood2, 250, 250));
                     break;
                 case 4:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.kavalalogo, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.kavalafood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.kavalainside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.kavalafood2, 250, 250));
                     break;
                 case 5:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.houseofthailogo, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.houseofthaifood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.houseofthaiinside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.houseofthaifood2, 250, 250));
                     break;
                 case 6:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.tasteofbengaloutdoors, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.tasteofbengalfood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.tasteofbengalfood2, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.tasteofbengalfood, 250, 250));
                     break;
                 case 7:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.malaguetalogo, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.malaguetafood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.malaguetainside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.malaguetafood, 250, 250));
                     break;
                 case 8:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.goodtasteoutside, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.goodtastefood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.goodtastefood2, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.goodtastefood2, 250, 250));
                     break;
                 case 9:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.manettaoutside, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.manettafood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.manettainside, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.manettafood, 250, 250));
                     break;
                 case 10:
                     restaurantTopImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.casaenriqueteam, 100, 100));
-                    restaurantRightImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.casaenriquefood, 100, 100));
-                    restaurantLeftImage.setImageBitmap(
-                            decodeSampledBitmapFromResource(getResources(), R.drawable.casaenriquefood2, 100, 100));
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.casaenriquefood3, 250, 250));
                     break;
             }
 
@@ -150,10 +116,10 @@ public class DetailsActivity extends AppCompatActivity {
 
             if (mHelper.checkFavorite(id) == 1) {
                 mFavFlag = true;
-                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#43A047")));
+                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
             } else {
                 mFavFlag = false;
-                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
+                buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#616161")));
             }
 
 
@@ -164,13 +130,13 @@ public class DetailsActivity extends AppCompatActivity {
                         SQLiteDatabase db = mHelper.getWritableDatabase();
                         db.execSQL("UPDATE RestaurantDetails SET Favorite = 0 WHERE _id = " + id);
                         Toast.makeText(DetailsActivity.this, mHelper.getNameById(id) + " was removed", Toast.LENGTH_SHORT).show();
-                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
+                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#616161")));
                         mFavFlag = false;
                     } else { // If the button is not already a favorite
                         SQLiteDatabase db = mHelper.getWritableDatabase();
                         db.execSQL("UPDATE RestaurantDetails SET Favorite = 1 WHERE _id = " + id);
                         Toast.makeText(DetailsActivity.this, mHelper.getNameById(id) + " was added", Toast.LENGTH_SHORT).show();
-                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#43A047")));
+                        buttonFav.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#40BFFF")));
                         mFavFlag = true;
                     }
 

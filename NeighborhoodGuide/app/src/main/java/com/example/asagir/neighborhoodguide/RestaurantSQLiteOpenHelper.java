@@ -56,11 +56,6 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_RESTAURANT_LIST_TABLE);
-        /*try {
-            loadRestaurantInfo(db);
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }*/
     }
 
     @Override
@@ -68,35 +63,6 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + RESTAURANT_LIST_TABLE);
         this.onCreate(db);
     }
-
-    /*private void loadRestaurantInfo(SQLiteDatabase db) throws IOException {
-        final Resources resources = mHelperContext.getResources();
-        InputStream inputStream = resources.openRawResource(R.raw.prepopulated_restaurant_list);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        try {
-            String line;
-            ContentValues values;
-            while ((line = reader.readLine()) != null) {
-                String[] strings = TextUtils.split(line, "~");
-                if (strings.length < 4) continue;
-                values = new ContentValues();
-                values.put(COL_RESTAURANT_NAME, strings[0].trim());
-                values.put(COL_CUISINE, strings[1].trim());
-                values.put(COL_ADDRESS, strings[2].trim());
-                values.put(COL_FAVORITE, strings[3].trim());
-                values.put(COL_DESCRIPTION, strings[4].trim());
-                long id = db.insert(RESTAURANT_LIST_TABLE, null, values);
-                if (id < 0) {
-                    Log.e(TAG, "unable to add entry");
-                } else {
-                    Log.d(TAG, "Added item to database: " + strings[0]);
-                }
-            }
-        } finally {
-            reader.close();
-        }
-    }*/
 
     public Cursor getRestaurantList() {
 
@@ -205,7 +171,7 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursorFavoriteCheck = db.query(RESTAURANT_LIST_TABLE, // a. table
-                new String[] {COL_FAVORITE}, // b. column names
+                new String[]{COL_FAVORITE}, // b. column names
                 COL_ID + " LIKE ? AND " + COL_FAVORITE + " = 1", // c. selections
                 new String[]{String.valueOf(id)}, // d. selections args
                 null, // e. group by
@@ -218,24 +184,6 @@ public class RestaurantSQLiteOpenHelper extends SQLiteOpenHelper {
         }
         return -1;
     }
-
-
-//    public int setFavorite(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//
-//        if (checkFavorite(id) == 0) {
-//            contentValues.put(COL_ID, id);
-//            contentValues.put(COL_FAVORITE, 1);
-//        } else if (checkFavorite(id) == 1) {
-//            contentValues.put(COL_ID, id);
-//            contentValues.put(COL_FAVORITE, 0);
-//        }
-//        db.update(RESTAURANT_LIST_TABLE, contentValues, "_id = ?", new String[]{String.valueOf(id)});
-//
-//        return checkFavorite(id);
-//
-//    }
 
     public String getDescriptionById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
